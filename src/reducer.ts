@@ -1,11 +1,11 @@
-interface Item  {
+type Item = {
     name: string,
     price: string,
     image: string
 }
 
-export interface State  {
-    basket: Item[]
+export type State = {
+    basket: Item[],
 }
 
 
@@ -13,7 +13,7 @@ export const initialState : State = {
     basket: []
 }
 
-export const reducer = (state: State, action: { type: string, item: any }) : State => {
+export const reducer = (state: any, action: { type: string, item: any })  => {
     switch(action.type) {
         case 'ADD_TO_BASKET': 
             return {

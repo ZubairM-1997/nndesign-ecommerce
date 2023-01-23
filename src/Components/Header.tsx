@@ -34,6 +34,7 @@ function Header() {
               </div>
             </Link>
 
+            <Link to="/login">
             <div className='header__option'>
             <span className='header__optionLineTwo'>
                 Sign In
@@ -42,6 +43,8 @@ function Header() {
             <PersonIcon className='header__account'/>
 
             </div>
+            
+            </Link>
         </div>
     </div>
   )
