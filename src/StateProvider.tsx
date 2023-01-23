@@ -14,4 +14,3 @@ export const StateProvider = ({ reducer, initialState, children} : any) => (
 
 export const useStateValue = () => useContext(StateContext)
 
-export {}
