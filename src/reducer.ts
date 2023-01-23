@@ -22,13 +22,7 @@ type Action = {
 }
 
 export interface ContextType {
-    state: {
-        basket: Item[],
-        user: {
-            email: string,
-            password: string
-        }
-    },
+    state: State,
     dispatch: React.Dispatch<{ type: string; value: unknown }>;
 }
 
