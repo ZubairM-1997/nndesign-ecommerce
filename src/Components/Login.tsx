@@ -1,27 +1,36 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState} from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import logo from '../images/nn_design_logo.jpg'
 import './Login.css'
 import { auth, db} from '../firebase'
-import { createUserWithEmailAndPassword } from "firebase/auth"
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, sendEmailVerification } from "firebase/auth"
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const history = useNavigate()
 
     const signIn = (e: { preventDefault: () => void }) => {
         e.preventDefault();
 
-        // firebase stuff
+        signInWithEmailAndPassword(auth, email, password)
+        .then((authentication) => {
+            if (authentication){
+                history('/home')
+            }
+        })
+        .catch((error) => {
+            alert(error.message)
+        })
     }
 
     const register = (e: { preventDefault: () => void }) => {
         e.preventDefault();
-
-        //firebase stuff
         createUserWithEmailAndPassword(auth, email, password)
         .then((authentication) => {
-            console.log(authentication)
+            if (authentication){
+                history('/home')
+            }
         })
         .catch((error) => {
             alert(error.message)
