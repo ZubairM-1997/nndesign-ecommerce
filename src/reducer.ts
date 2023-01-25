@@ -5,7 +5,7 @@ type Product = {
     name: string,
     price: number,
     description: string,
-    image: string,
+    images: string[],
     smallSize_inStock: number,
     mediumSize_inStock: number,
     largeSize_inStock: number,
