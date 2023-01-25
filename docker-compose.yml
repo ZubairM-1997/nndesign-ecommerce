@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  database:
+    image: 'postgres'
+    container_name: nndesign
+    build:
+      context: .
+      target: nndesign
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: nuzhat
+      POSTGRES_DB: store
+    expose:
+      - 5432
+    ports:
+      - 5432:5432
+    volumes: 
+      - ./scripts/postgres-data:/var/lib/postgresql/data
+      - ./scripts/admin_users.sql:/docker-entrypoint-initdb.d/admin_users.sql

@@ -1,38 +1,50 @@
 import { Reducer } from 'react'
 
-type Item = {
-    id: string,
+type Product = {
+    id: number,
     name: string,
-    price: string,
+    price: number,
     description: string,
-    image: string
+    image: string,
+    smallSize_inStock: number,
+    mediumSize_inStock: number,
+    largeSize_inStock: number,
+    extraLargeSize_inStock: number
 }
 
 export type State = {
-    basket: Item[],
+    basket: Product[] ,
     user: {
-        email: string,
-        password: string
+        email: string | null,
+        password: string | null
     },
 }
 
 type Action = {
     type: string,
-    item: Item
+    item: Product
 }
 
 export interface ContextType {
     state: State,
-    dispatch: React.Dispatch<{ type: string; value: unknown }>;
+    dispatch: React.Dispatch<Action>;
 }
 
 
-export const initialState  = {
-    basket: [], 
-    user: null
-} as unknown as ContextType
+export const initialState : ContextType = {
+    state : {
+        basket: [] as Product[],
+        user: {
+            email: null,
+            password: null
+        }
+    },
+
+    dispatch: () => {}
+} 
 
 export const reducer = (state: State, action: Action) : State => {
+    console.log(action)
     switch(action.type) {
         case 'ADD_TO_BASKET': 
             return {

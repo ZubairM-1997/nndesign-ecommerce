@@ -14,6 +14,8 @@
     "@types/node": "^16.18.11",
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",
+    "axios": "^1.2.4",
+    "dotenv": "^16.0.3",
     "firebase": "^9.16.0",
     "react": "^18.2.0",
     "react-currency-format": "^1.1.0",
@@ -50,6 +52,7 @@
   },
   "devDependencies": {
     "@types/react-currency-format": "^1.0.0",
-    "@types/react-lazy-load-image-component": "^1.5.2"
+    "@types/react-lazy-load-image-component": "^1.5.2",
+    "dotenv-webpack": "^8.0.1"
   }
 }

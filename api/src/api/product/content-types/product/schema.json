@@ -1,0 +1,46 @@
+{
+  "kind": "collectionType",
+  "collectionName": "products",
+  "info": {
+    "singularName": "product",
+    "pluralName": "products",
+    "displayName": "Product"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "images": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": true
+    },
+    "smallSize_inStock": {
+      "type": "integer"
+    },
+    "mediumSize_inStock": {
+      "type": "integer"
+    },
+    "largeSize_inStock": {
+      "type": "integer"
+    },
+    "extraLargeSize_inStock": {
+      "type": "integer"
+    },
+    "price": {
+      "type": "decimal"
+    }
+  }
+}
