@@ -1,7 +1,7 @@
 import { Reducer } from 'react'
 
-type Product = {
-    id: number,
+export type Product = {
+    uuid: string,
     name: string,
     price: number,
     description: string,

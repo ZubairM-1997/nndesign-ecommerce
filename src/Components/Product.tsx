@@ -1,41 +1,39 @@
 import React from 'react'
 import { useStateValue } from '../StateProvider'
 import "./Product.css"
+import { Product as Item } from '../reducer'
 
-const Product = () => {
+const Product = ( props : Item ) => {
   const {state, dispatch} = useStateValue()
-
-  console.log('this is the basket', state.basket)
 
   const addToBasket = () => {
     // dispatch the item to data layer
-    dispatch({
-      type: 'ADD_TO_BASKET',
-      item : {
-        id: 1,
-        name: "Example Title",
-        price: 19.99,
-        description: "it is a random example",
-        image: 'https://ui.assets-asda.com/dm/9781408855669',
-        smallSize_inStock: 0,
-        mediumSize_inStock: 0,
-        largeSize_inStock: 0,
-        extraLargeSize_inStock: 0
-      }
-    })
-
+    if (
+      props.smallSize_inStock === 0 && 
+      props.mediumSize_inStock === 0 && 
+      props.largeSize_inStock === 0 && 
+      props.extraLargeSize_inStock === 0) {
+        alert("This item is currently not in stock")
+    } else {
+        dispatch({
+          type: 'ADD_TO_BASKET',
+          item : props
+        })
+    }
   }
   return (
     <div className='product'>
-        <div className="product__info">
-            <p>Example Title</p>
+
+      <div className="product__info">
+            <p>{props.name}</p>
             <p className="product__price">
                 <small>£</small>
-                <strong>19.99</strong>
+                <strong>{props.price}</strong>
             </p>
         </div>
 
-        <img src='https://ui.assets-asda.com/dm/9781408855669'></img>
+        <img src={'http://localhost:1337' + props.images[0]} />
+
 
         <button onClick={addToBasket}>Add to Cart</button>
 

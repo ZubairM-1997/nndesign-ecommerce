@@ -4,24 +4,47 @@ import banner from '../images/banner.png'
 import Product from './Product';
 import './Home.css'
 import axios, {AxiosRequestConfig} from 'axios';
-// import "dotenv/config";
-import { AddPrefixToKeys } from 'firebase/firestore';
+import { Product as Item } from '../reducer';
 
 
 const Home = () => {
 
-  const [items, setItems] = useState([])
-
+  const [items , setItems] = useState<Item[]>([])
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await axios.get(process.env.REACT_APP_API_URL + "/products?populate=*" as string, {
+        const resp = await axios.get(process.env.REACT_APP_API_URL + "/products?pagination[page]=1&pagination[pageSize]=10&populate=*" as string, {
           headers: {
             Authorization: "bearer " + process.env.REACT_APP_API_TOKEN as string
           }
         } as AxiosRequestConfig)
-        console.log(data)
+
+        console.log(resp)
+        
+        const itemsState : Item[] = resp.data.data.map((item : any) => {
+
+          const images = item.attributes.images.data.map((img : any) => {
+            return img.attributes.url
+          })
+
+
+          let itemToBePushed : Item = {
+            uuid: item.attributes.UUID,
+            name: item.attributes.name,
+            description: item.attributes.description,
+            smallSize_inStock: item.attributes.smallSize_inStock,
+            extraLargeSize_inStock: item.attributes.extraLargeSize_inStock,
+            largeSize_inStock: item.attributes.largeSize_inStock,
+            mediumSize_inStock: item.attributes.mediumSize_inStock,
+            price: item.attributes.price,
+            images
+          }
+
+          return itemToBePushed
+        })
+        setItems(itemsState)
+
       } catch(error) {
         console.log(error)
       }
@@ -29,25 +52,35 @@ const Home = () => {
     fetchData();
   }, [])
 
+  console.log(items)
+
   return (
     <div className='home'>
         <div className='home__container'>
               <img className='home_image' src={banner} />
             
-            <div className="home__row">
-              <Product />
-              <Product />
-              <Product />
-            </div>
+            {
+              items[0] && items[0].images.length >0 &&
+              <>
+                <div className="home__row">
+                  <Product {...items[0]}/>
+                  <Product {...items[1]}/>
+                  <Product {...items[2]}/>
+                  <Product {...items[3]}/>
+                  <Product {...items[4]}/>
+                </div>
 
-            <div className="home__row">
-              <Product />
-            </div>
+              <div className="home__row">
+                  <Product {...items[5]}/>
+                  <Product {...items[6]}/>
+                  <Product {...items[7]}/>
+              </div>
 
-            <div className="home__row">
-                
-
-            </div>
+              <div className="home__row">
+                  <Product {...items[8]}/>
+              </div>
+              </>
+            }
         </div>
     </div>
   )
