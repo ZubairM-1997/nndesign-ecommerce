@@ -6,6 +6,11 @@ import './Home.css'
 import axios, {AxiosRequestConfig} from 'axios';
 import { Product as Item } from '../reducer';
 
+type ImageType = {
+  attributes: {
+    url: string
+  }
+}
 
 const Home = () => {
 
@@ -24,7 +29,7 @@ const Home = () => {
         
         const itemsState : Item[] = resp.data.data.map((item : any) => {
 
-          const images = item.attributes.images.data.map((img : any) => {
+          const images : string[] = item.attributes.images.data.map((img : ImageType) => {
             return img.attributes.url
           })
 
