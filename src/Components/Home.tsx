@@ -73,10 +73,10 @@ const Home = () => {
                   <Product {...items[1]}/>
                   <Product {...items[2]}/>
                   <Product {...items[3]}/>
-                  <Product {...items[4]}/>
                 </div>
 
               <div className="home__row">
+              <Product {...items[4]}/>
                   <Product {...items[5]}/>
                   <Product {...items[6]}/>
                   <Product {...items[7]}/>
