@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Checkout from './Components/Checkout';
 import Login from './Components/Login';
 import { auth } from './firebase'
+import ProductDetails from './Components/ProductDetails';
 
 function App() {
 
@@ -39,6 +40,13 @@ function App() {
           </>
         }/>
         <Route path='/login' element={<Login />} />
+        <Route path='/products/:id' element={
+          <>
+            <Header />
+            <ProductDetails />
+          
+          </>
+        } />
       </Routes>
     </div>
     </Router>

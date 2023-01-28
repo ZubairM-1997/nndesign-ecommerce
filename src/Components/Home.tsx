@@ -6,7 +6,7 @@ import './Home.css'
 import axios, {AxiosRequestConfig} from 'axios';
 import { Product as Item } from '../reducer';
 
-type ImageType = {
+export type ImageType = {
   attributes: {
     url: string
   }
@@ -35,6 +35,7 @@ const Home = () => {
 
 
           let itemToBePushed : Item = {
+            id: item.id as number,
             uuid: item.attributes.UUID,
             name: item.attributes.name,
             description: item.attributes.description,

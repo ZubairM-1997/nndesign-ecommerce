@@ -2,9 +2,18 @@ import React from 'react'
 import { useStateValue } from '../StateProvider'
 import "./Product.css"
 import { Product as Item } from '../reducer'
+import { useNavigate } from 'react-router-dom'
 
 const Product = ( props : Item ) => {
   const {state, dispatch} = useStateValue()
+
+  const history = useNavigate();
+
+
+  const viewDetails = () => {
+    history(`/products/${props.id}`);
+  }
+
 
   const addToBasket = () => {
     // dispatch the item to data layer
@@ -22,7 +31,7 @@ const Product = ( props : Item ) => {
     }
   }
   return (
-    <div className='product'>
+    <div id={`${props.id}`} className='product'>
 
       <div className="product__info">
             <p>{props.name}</p>
@@ -32,8 +41,7 @@ const Product = ( props : Item ) => {
             </p>
         </div>
 
-        <img src={'http://localhost:1337' + props.images[0]} />
-
+        <img onClick={viewDetails} src={'http://localhost:1337' + props.images[0]} />
 
         <button onClick={addToBasket}>Add to Cart</button>
 

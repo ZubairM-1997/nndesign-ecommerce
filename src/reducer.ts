@@ -1,15 +1,16 @@
 import { Reducer } from 'react'
 
 export type Product = {
-    uuid: string,
-    name: string,
-    price: number,
-    description: string,
-    images: string[],
-    smallSize_inStock: number,
-    mediumSize_inStock: number,
-    largeSize_inStock: number,
-    extraLargeSize_inStock: number
+    id: number | null,
+    uuid: string | null,
+    name: string | null,
+    price: number | null,
+    description: string | null,
+    images: string[] ,
+    smallSize_inStock: number | null,
+    mediumSize_inStock: number | null,
+    largeSize_inStock: number | null,
+    extraLargeSize_inStock: number | null
 }
 
 export type State = {
