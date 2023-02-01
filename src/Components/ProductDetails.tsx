@@ -120,7 +120,59 @@ const ProductDetails = () => {
   }
 
   const onDropdownSelected = (e: any)  => {
-    selectSize(e.target.value)
+    selectSize(e.target.value as size)
+  }
+
+  const renderStockLeft = (size: size) => {
+    switch(size) {
+      case "S": {
+        if (product.smallSize_inStock === 0){
+          return (
+            <p>Out of Stock</p>
+          )
+        } else {
+          return (
+            <p>{product.smallSize_inStock} left</p>
+          )
+        }
+      }
+
+      case "M": {
+        if (product.mediumSize_inStock === 0){
+          return (
+            <p>Out of Stock</p>
+          )
+        } else {
+          return (
+            <p>{product.mediumSize_inStock} left</p>
+          )
+        }
+      }
+
+      case "L": {
+        if (product.largeSize_inStock === 0){
+          return (
+            <p>Out of Stock</p>
+          )
+        } else {
+          return (
+            <p>{product.largeSize_inStock} left</p>
+          )
+        }
+      }
+
+      case "XL": {
+        if (product.extraLargeSize_inStock === 0){
+          return (
+            <p>Out of Stock</p>
+          )
+        } else {
+          return (
+            <p>{product.extraLargeSize_inStock} left</p>
+          )
+        }
+      }
+    }
   }
 
   return (
@@ -177,6 +229,7 @@ const ProductDetails = () => {
             </Select>
           </FormControl>
         </Box>
+        {renderStockLeft(selectedSize)}
             <button className="productDetails__button" onClick={checkBasket}>Add to Cart</button>
           </div>
         </>
