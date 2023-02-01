@@ -1,3 +1,4 @@
+
 import { Reducer } from 'react'
 
 export type Product = {
@@ -13,8 +14,23 @@ export type Product = {
     extraLargeSize_inStock: number | null
 }
 
+
+export type size = "S" | "M" | "L" | "XL"
+
+
+type chosenItem = {
+    id: number | null,
+    uuid: string | null,
+    name: string | null,
+    price: number | null,
+    description: string | null,
+    images: string[],
+    size: size | null,
+    quantity: number | null
+}
+
 export type State = {
-    basket: Product[] ,
+    basket: chosenItem[] ,
     user: {
         email: string | null,
         password: string | null
@@ -23,7 +39,7 @@ export type State = {
 
 type Action = {
     type: string,
-    item: Product
+    item: chosenItem
 }
 
 export interface ContextType {
@@ -34,7 +50,7 @@ export interface ContextType {
 
 export const initialState : ContextType = {
     state : {
-        basket: [] as Product[],
+        basket: [] as chosenItem[],
         user: {
             email: null,
             password: null
@@ -48,10 +64,22 @@ export const reducer = (state: State, action: Action) : State => {
     console.log(action)
     switch(action.type) {
         case 'ADD_TO_BASKET': 
-            return {
-                ...state,
-                basket: [...state.basket, action.item]
-            };
+        const item = action.item;
+        const chosenItem: chosenItem = {
+          id: item.id,
+          uuid: item.uuid,
+          name: item.name,
+          price: item.price,
+          description: item.description,
+          images: item.images,
+          size: null, // or provide a default value
+          quantity: null // or provide a default value
+        };
+      
+        return {
+          ...state,
+          basket: [...state.basket, chosenItem]
+        };
         default: 
             return state;
         

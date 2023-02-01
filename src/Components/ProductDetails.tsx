@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Product } from '../reducer';
+import { Product, size } from '../reducer';
 import { useParams } from "react-router-dom";
 import { useStateValue } from '../StateProvider';
 import './ProductDetails.css'
 import { ImageType } from './Home';
+import Box from '@mui/material/Box';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 const ProductDetails = () => {
 
@@ -21,6 +26,7 @@ const ProductDetails = () => {
     price: null, 
     smallSize_inStock: null
   });
+  const [selectedSize, selectSize] = useState<size | null>(null)
   let { id } = useParams(); 
 
   useEffect(() => {
@@ -58,19 +64,57 @@ const ProductDetails = () => {
   }, []);
 
   const addToBasket = () => {
-    // dispatch the item to data layer
-    if (
-      product.smallSize_inStock === 0 && 
-      product.mediumSize_inStock === 0 && 
-      product.largeSize_inStock === 0 && 
-      product.extraLargeSize_inStock === 0) {
-        alert("This item is currently not in stock")
-    } else {
+    switch(selectedSize) {
+      case "S": {
+        if (product.smallSize_inStock === 0){
+          alert("Small Size not in Stock")
+        }
+        break;
+      }
+
+      case "M": {
+        if (product.mediumSize_inStock === 0){
+          alert("Medium Size not in Stock")
+        }
+        break;
+      }
+
+      case "L": {
+        if (product.largeSize_inStock === 0){
+          alert("Large Size not in Stock")
+        }
+        break;
+      }
+
+      case "XL": {
+        if (product.extraLargeSize_inStock === 0){
+          alert("Extra Large Size not in Stock")
+        }
+        break;
+      }
+
+      default: {
         dispatch({
           type: 'ADD_TO_BASKET',
-          item : product
+          item : {
+            quantity: 1,
+            description: product.description,
+            id: product.id,
+            images: product.images,
+            name: product.name,
+            price: product.price,
+            size: selectedSize,
+            uuid: product.uuid
+          }
         })
+        break;
+      }
     }
+
+  }
+
+  const onDropdownSelected = (e: any)  => {
+    selectSize(e.target.value)
   }
 
   return (
@@ -94,19 +138,10 @@ const ProductDetails = () => {
                 alt=""
               />}
             </div>
-            {/* <div className="mainImg">
-              <img
-                src={
-                  process.env.REACT_APP_UPLOAD_URL +
-                  data?.attributes[selectedImg]?.data?.attributes?.url
-                }
-                alt=""
-              />
-            </div> */}
           </div>
           <div className="right">
             <h1>{product.name}</h1>
-            <span className="price">${product.price}</span>
+            <span className="price">£{product.price}</span>
             <p>{product.description}</p>
             {/* <div className="quantity">
               <button
@@ -119,6 +154,23 @@ const ProductDetails = () => {
               {quantity}
               <button onClick={() => setQuantity((prev) => prev + 1)}>+</button>
             </div> */}
+        <Box sx={{ minWidth: 120 }}>
+          <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">Size</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={selectedSize}
+              label="size"
+              onChange={onDropdownSelected}
+            >
+              <MenuItem value="S">Small</MenuItem>
+              <MenuItem value="M">Medium</MenuItem>
+              <MenuItem value="L">Large</MenuItem>
+              <MenuItem value="XL">Extra Large</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
             <button className="productDetails__button" onClick={addToBasket}>Add to Cart</button>
           </div>
         </>
