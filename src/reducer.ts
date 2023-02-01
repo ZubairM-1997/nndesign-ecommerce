@@ -61,9 +61,9 @@ export const initialState : ContextType = {
 } 
 
 export const reducer = (state: State, action: Action) : State => {
-    console.log(action)
     switch(action.type) {
         case 'ADD_TO_BASKET': 
+        console.log(action)
         const item = action.item;
         const chosenItem: chosenItem = {
           id: item.id,
@@ -72,8 +72,8 @@ export const reducer = (state: State, action: Action) : State => {
           price: item.price,
           description: item.description,
           images: item.images,
-          size: null, // or provide a default value
-          quantity: null // or provide a default value
+          size: item.size, // or provide a default value
+          quantity: item.quantity // or provide a default value
         };
       
         return {

@@ -9,10 +9,11 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { breadcrumbsClasses } from '@mui/material/Breadcrumbs'
 
 const Product = ( props : Item ) => {
   const {state, dispatch} = useStateValue()
-  const [selectedSize, selectSize] = useState<size | null>(null)
+  const [selectedSize, selectSize] = useState<size >("S")
 
   const history = useNavigate();
 
@@ -21,12 +22,29 @@ const Product = ( props : Item ) => {
     history(`/products/${props.id}`);
   }
 
+  const addToBasket = (size: size) => {
+    dispatch({
+      type: 'ADD_TO_BASKET',
+      item : {
+        quantity: 1,
+        description: props.description,
+        id: props.id,
+        images: props.images,
+        name: props.name,
+        price: props.price,
+        size,
+        uuid: props.uuid
+      }
+    })
+  }
 
-  const addToBasket = () => {
+  const checkBasket = () => {
     switch(selectedSize) {
       case "S": {
         if (props.smallSize_inStock === 0){
           alert("Small Size not in Stock")
+        } else {
+          addToBasket("S")
         }
         break;
       }
@@ -34,6 +52,8 @@ const Product = ( props : Item ) => {
       case "M": {
         if (props.mediumSize_inStock === 0){
           alert("Medium Size not in Stock")
+        } else {
+          addToBasket("M")
         }
         break;
       }
@@ -41,6 +61,8 @@ const Product = ( props : Item ) => {
       case "L": {
         if (props.largeSize_inStock === 0){
           alert("Large Size not in Stock")
+        } else {
+          addToBasket("L")
         }
         break;
       }
@@ -48,28 +70,12 @@ const Product = ( props : Item ) => {
       case "XL": {
         if (props.extraLargeSize_inStock === 0){
           alert("Extra Large Size not in Stock")
+        } else {
+          addToBasket("XL")
         }
         break;
       }
-
-      default: {
-        dispatch({
-          type: 'ADD_TO_BASKET',
-          item : {
-            quantity: 1,
-            description: props.description,
-            id: props.id,
-            images: props.images,
-            name: props.name,
-            price: props.price,
-            size: selectedSize,
-            uuid: props.uuid
-          }
-        })
-        break;
-      }
     }
-
   }
 
   const onDropdownSelected = (e: any)  => {
@@ -109,7 +115,7 @@ const Product = ( props : Item ) => {
       </FormControl>
     </Box>
 
-        <button onClick={addToBasket}>Add to Cart</button>
+        <button onClick={checkBasket}>Add to Cart</button>
 
     </div>
   )

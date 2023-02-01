@@ -26,7 +26,7 @@ const ProductDetails = () => {
     price: null, 
     smallSize_inStock: null
   });
-  const [selectedSize, selectSize] = useState<size | null>(null)
+  const [selectedSize, selectSize] = useState<size>("S")
   let { id } = useParams(); 
 
   useEffect(() => {
@@ -63,11 +63,29 @@ const ProductDetails = () => {
     fetchData();
   }, []);
 
-  const addToBasket = () => {
+  const addToBasket = (size: size) => {
+    dispatch({
+      type: 'ADD_TO_BASKET',
+      item : {
+        quantity: 1,
+        description: product.description,
+        id: product.id,
+        images: product.images,
+        name: product.name,
+        price: product.price,
+        size,
+        uuid: product.uuid
+      }
+    })
+  }
+
+  const checkBasket = () => {
     switch(selectedSize) {
       case "S": {
         if (product.smallSize_inStock === 0){
           alert("Small Size not in Stock")
+        } else {
+          addToBasket("S")
         }
         break;
       }
@@ -75,6 +93,8 @@ const ProductDetails = () => {
       case "M": {
         if (product.mediumSize_inStock === 0){
           alert("Medium Size not in Stock")
+        } else {
+          addToBasket("M")
         }
         break;
       }
@@ -82,6 +102,8 @@ const ProductDetails = () => {
       case "L": {
         if (product.largeSize_inStock === 0){
           alert("Large Size not in Stock")
+        } else {
+          addToBasket("L")
         }
         break;
       }
@@ -89,28 +111,12 @@ const ProductDetails = () => {
       case "XL": {
         if (product.extraLargeSize_inStock === 0){
           alert("Extra Large Size not in Stock")
+        } else {
+          addToBasket("XL")
         }
         break;
       }
-
-      default: {
-        dispatch({
-          type: 'ADD_TO_BASKET',
-          item : {
-            quantity: 1,
-            description: product.description,
-            id: product.id,
-            images: product.images,
-            name: product.name,
-            price: product.price,
-            size: selectedSize,
-            uuid: product.uuid
-          }
-        })
-        break;
-      }
     }
-
   }
 
   const onDropdownSelected = (e: any)  => {
@@ -171,7 +177,7 @@ const ProductDetails = () => {
             </Select>
           </FormControl>
         </Box>
-            <button className="productDetails__button" onClick={addToBasket}>Add to Cart</button>
+            <button className="productDetails__button" onClick={checkBasket}>Add to Cart</button>
           </div>
         </>
         }
