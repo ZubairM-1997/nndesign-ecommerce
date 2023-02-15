@@ -178,7 +178,7 @@ const ProductDetails = () => {
   return (
     <div className='productDetails'>
         {
-            product.uuid && 
+            product.name && 
             <>
           <div className="left">
             <div className="images">

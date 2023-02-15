@@ -86,7 +86,9 @@ const Product = ( props : Item ) => {
   return (
     <div id={`${props.id}`} className='product'>
 
-      <div className="product__info">
+{    props.images && props.images.length > 0 &&  
+  <>
+  <div className="product__info">
             <p>{props.name}</p>
             <p className="product__price">
                 <small>£</small>
@@ -116,7 +118,8 @@ const Product = ( props : Item ) => {
     </Box>
 
         <button onClick={checkBasket}>Add to Cart</button>
-
+      </>
+}
     </div>
   )
 }
