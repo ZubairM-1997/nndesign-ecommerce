@@ -64,6 +64,7 @@ const ProductDetails = () => {
   }, []);
 
   const addToBasket = (size: size) => {
+    alert("Successfully added item to the basket")
     dispatch({
       type: 'ADD_TO_BASKET',
       item : {
@@ -132,7 +133,10 @@ const ProductDetails = () => {
           )
         } else {
           return (
+            <>
             <p>{product.smallSize_inStock} left</p>
+            <button className="productDetails__button" onClick={checkBasket} >Add to Cart</button>
+          </>
           )
         }
       }
@@ -144,7 +148,10 @@ const ProductDetails = () => {
           )
         } else {
           return (
+            <>
             <p>{product.mediumSize_inStock} left</p>
+            <button className="productDetails__button" onClick={checkBasket} >Add to Cart</button>
+          </>
           )
         }
       }
@@ -156,7 +163,10 @@ const ProductDetails = () => {
           )
         } else {
           return (
-            <p>{product.largeSize_inStock} left</p>
+            <>
+              <p>{product.largeSize_inStock} left</p>
+              <button className="productDetails__button" onClick={checkBasket} >Add to Cart</button>
+            </>
           )
         }
       }
@@ -168,10 +178,14 @@ const ProductDetails = () => {
           )
         } else {
           return (
+            <>
             <p>{product.extraLargeSize_inStock} left</p>
+            <button className="productDetails__button" onClick={checkBasket} >Add to Cart</button>
+            </>
           )
         }
       }
+
     }
   }
 
@@ -230,7 +244,6 @@ const ProductDetails = () => {
           </FormControl>
         </Box>
         {renderStockLeft(selectedSize)}
-            <button className="productDetails__button" onClick={checkBasket}>Add to Cart</button>
           </div>
         </>
         }
