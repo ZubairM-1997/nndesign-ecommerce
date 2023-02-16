@@ -47,6 +47,10 @@ export interface ContextType {
     dispatch: React.Dispatch<Action>;
 }
 
+export const getBasketTotal = (basket: chosenItem[]) => {
+    return basket?.reduce((amount : number, item: chosenItem) => item.price as number + amount, 0)
+}
+
 
 export const initialState : ContextType = {
     state : {
@@ -63,7 +67,6 @@ export const initialState : ContextType = {
 export const reducer = (state: State, action: Action) : State => {
     switch(action.type) {
         case 'ADD_TO_BASKET': 
-        console.log(action)
         const item = action.item;
         const chosenItem: chosenItem = {
           id: item.id,
@@ -80,9 +83,30 @@ export const reducer = (state: State, action: Action) : State => {
           ...state,
           basket: [...state.basket, chosenItem]
         };
-        default: 
-            return state;
+
+        case "REMOVE_FROM_BASKET":
+        const index = state.basket.findIndex(
+            (basketItem) => basketItem.id === action.item.id
+        );
+        let newBasket = [...state.basket];
+
+        if (index >= 0) {
+            newBasket.splice(index, 1);
+
+        } else {
+            console.warn(
+            `Cant remove product (id: ${action.item.id}) as its not in basket!`
+            )
+        }
+
+        return {
+            ...state,
+            basket: newBasket
+        }
         
-    }
+        default: 
+                return state;
+            
+        }
 }
 
